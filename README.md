@@ -6,6 +6,13 @@ Released under GNU General Public License v3.0 ( https://github.com/pc-dissanaya
 ## Getting Started
 
 This project has written using Dart and FLutter UI.
+Also used following dependancies
+- [Cupertino Icons](https://pub.dev/packages/cupertino_icons)
+- [Fontawesome flutter](https://pub.dev/packages/font_awesome_flutter)
+- [Flutter Datetime picker](https://pub.dev/packages/flutter_datetime_picker)
+- [Jiffy](https://pub.dev/packages/jiffy)
+- [Url launcher](https://pub.dev/packages/url_launcher)
+
 
 A few resources to get you started if this is your first Flutter project:
 
