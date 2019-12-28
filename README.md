@@ -1,6 +1,6 @@
 # OBS-GYN
 ###Created for EDUCATIONAL PURPOSES ONLY.
-Laways seek medical, psychological advice from professional qualified health care professional without any delay.
+Alaways seek medical, psychological advice from professional qualified health care professional without any delay.
 Open Source Calculators and Patient Information Database for Obstetrics and Gynecology.
 Made with Flutter UI Toolkit and Dart language.
 Find the  code at GitHub( https://github.com/pc-dissanayake/GYN-OBS)
