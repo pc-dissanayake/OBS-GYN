@@ -1,14 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import 'FetalParametersPage.dart';
+import 'PatientList.dart';
+import 'apgarscorepage.dart';
+import 'bishopcorepage.dart';
 import 'pages.dart';
 import 'variables.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,10 +40,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var formatter = new DateFormat('yyyy-MM-dd');
+  DateTime toDAyNow = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     Widget allWidgets;
-
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text('OBS | GYN')),
@@ -41,13 +56,15 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: primaryColor,
+                gradient: gradient1,
               ),
-              child: Text(
-                'OBS | GYN',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+              child: Center(
+                child: Text(
+                  'OBS | GYN',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
                 ),
               ),
             ),
@@ -60,20 +77,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PregnancyCalculator()),
+                      builder: (context) => PregnancyCalculatorpage()),
                 );
               },
             ),
             ListTile(
               leading: Icon(
-                Icons.child_care,
+                FontAwesomeIcons.registered,
               ),
               title: Text('RMI'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => PregnancyCalculator()),
+                  MaterialPageRoute(builder: (context) => RMIIndexPage()),
                 );
               },
             ),
@@ -90,13 +106,56 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              leading: Icon(FontAwesomeIcons.heartbeat),
+              title: Text('USS Fetal Parameters'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FetalParameterPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(FontAwesomeIcons.amilia),
+              title: Text('APGAR Score'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ApgarscorePage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(FontAwesomeIcons.bold),
+              title: Text('Bishop Score for Vaginal Delivery'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BishopscorePage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(FontAwesomeIcons.exclamationTriangle),
+              title: Text('VBAC Risk Score'),
+              onTap: () {},
+            ),
+            ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()),
+                  MaterialPageRoute(
+                      builder: (context) => SettingsPageStateful()),
                 );
+              },
+            ),
+            ListTile(
+              leading: Icon(FontAwesomeIcons.link),
+              title: Text('Visit My Site'),
+              onTap: () {
+                launch('https://pcd.xyz.lk/');
               },
             ),
           ],
@@ -105,12 +164,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            stops: [0.2, 0.8],
-            colors: [Color(0xFF6a1b9a), Color(0xFF4a148c)],
-          )),
+            gradient: gradient2,
+          ),
           child: Center(
             child: GridView.count(
               primary: false,
@@ -124,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PregnancyCalculator()),
+                          builder: (context) => PregnancyCalculatorpage()),
                     );
                   },
                   child: Container(
@@ -162,7 +217,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RMIIndexPage()),
+                    );
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -201,7 +261,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SettingsPage()),
+                      MaterialPageRoute(
+                          builder: (context) => PatientListPage()),
                     );
                   },
                   child: Container(
@@ -221,7 +282,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            Icons.settings,
+                            FontAwesomeIcons.users,
                             size: 40,
                             color: HomepagebuttonsiconColor,
                           ),
@@ -229,7 +290,132 @@ class _MyHomePageState extends State<MyHomePage> {
                             height: 10,
                           ),
                           Text(
-                            'Settings',
+                            'Patient List',
+                            textAlign: TextAlign.center,
+                            style: HomePageButtonTexts,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FetalParameterPage()),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(5, 5),
+                          blurRadius: 10,
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            FontAwesomeIcons.heartbeat,
+                            size: 40,
+                            color: HomepagebuttonsiconColor,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'USS Fetal Parameters',
+                            textAlign: TextAlign.center,
+                            style: HomePageButtonTexts,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ApgarscorePage()),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(5, 5),
+                          blurRadius: 10,
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            FontAwesomeIcons.amilia,
+                            size: 40,
+                            color: HomepagebuttonsiconColor,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'APGAR Score',
+                            textAlign: TextAlign.center,
+                            style: HomePageButtonTexts,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BishopscorePage()),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(5, 5),
+                          blurRadius: 10,
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            FontAwesomeIcons.bold,
+                            size: 40,
+                            color: HomepagebuttonsiconColor,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Bishop Score',
                             textAlign: TextAlign.center,
                             style: HomePageButtonTexts,
                           ),
