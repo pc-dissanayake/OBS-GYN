@@ -1,6 +1,7 @@
 # OBS-GYN
 ### Created for EDUCATIONAL PURPOSES ONLY.
 ## Alaways seek medical, psychological advice from professional qualified health care professional without any delay.
+Available on Google Play ( https://play.google.com/store/apps/details?id=lk.xyz.pcd.obs_gyn) 
 I'm a medical student and enthusiast programmer so there might be errors and bugs.
 Open Source Calculators and Patient Information Database for Obstetrics and Gynecology.
 Made with Flutter UI Toolkit and Dart language.
