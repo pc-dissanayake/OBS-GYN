@@ -1,3 +1,4 @@
+⛔️ DEPRECATED
 # OBS|GYN
 ### Created for EDUCATIONAL PURPOSES ONLY.
 ## Alaways seek medical, psychological advice from professional qualified health care professional without any delay.
